@@ -26,12 +26,14 @@ fun mynull ([] : 'a list) : bool = true
   | mynull _  = false
 
 val () =
-    Unit.checkExpectWith Bool.toString "mynull [] should be true"
+    Unit.checkExpectWith Bool.toString
+    "mynull [] should be true"
     (fn () => mynull [])
     true
 
 val () =
-    Unit.checkExpectWith Bool.toString "mynull [1] should be false"
+    Unit.checkExpectWith Bool.toString
+    "mynull [1] should be false"
     (fn () => mynull [1])
     false
 (*************************************************************************************************)
@@ -54,17 +56,20 @@ fun firstVowel ([] : char list) : bool = false
       c = #"a" orelse c = #"e" orelse c = #"i" orelse c = #"o" orelse c = #"u";
 
 val () =
-    Unit.checkExpectWith Bool.toString "firstVowel 'ack' should be true"
+    Unit.checkExpectWith Bool.toString
+    "firstVowel 'ack' should be true"
     (fn () => firstVowel [#"a",#"c",#"k"])
     true
 
 val () =
-    Unit.checkExpectWith Bool.toString "firstVowel [] should be false"
+    Unit.checkExpectWith Bool.toString
+    "firstVowel [] should be false"
     (fn () => firstVowel [])
     false
 
 val () =
-    Unit.checkExpectWith Bool.toString "firstVowel 'b' should be false"
+    Unit.checkExpectWith Bool.toString
+    "firstVowel 'b' should be false"
     (fn () => firstVowel [#"b"])
     false
 (*************************************************************************************************)
@@ -164,21 +169,46 @@ fun zip (xs : 'a list, ys : 'b list) : ('a * 'b) list =
   | _ => raise Mismatch;
 
 val () =
-    Unit.checkExpectWith (Unit.listString (fn (x: int, y: int) => "(" ^ Int.toString x ^ ", " ^ Int.toString y ^ ")"))
+    Unit.checkExpectWith (
+      Unit.listString
+      (fn (x: int, y: int) => "(" ^ Int.toString x ^ ", " ^ Int.toString y ^ ")")
+    )
     "zip ([1,2,3], [7,8,9]) should be [(1,7), (2,8), (3,9)]"
     (fn () => zip ([1, 2, 3], [7, 8, 9]))
     [(1,7), (2,8), (3,9)]
 
 val () =
-    Unit.checkExpectWith (Unit.listString (fn (x: int, y: int) => "(" ^ Int.toString x ^ ", " ^ Int.toString y ^ ")"))
+    Unit.checkExpectWith (
+      Unit.listString
+      (fn (x: int, y: int) => "(" ^ Int.toString x ^ ", " ^ Int.toString y ^ ")")
+    )
     "zip ([], []) should be []"
     (fn () => zip ([], []))
     []
 
 val () =
-    Unit.checkExnWith (Unit.listString (fn (x: int, y: int) => "(" ^ Int.toString x ^ ", " ^ Int.toString y ^ ")"))
-    "zip ([1], []) should raise Mismatch"
-    (fn () => zip ([1], []))
+    Unit.checkExnWith (
+      Unit.listString
+      (fn (x: int, y: int) => "(" ^ Int.toString x ^ ", " ^ Int.toString y ^ ")")
+    )
+    "zip ([], [1, 2]) should raise Mismatch"
+    (fn () => zip ([], [1, 2]))
+
+val () =
+    Unit.checkExnWith (
+      Unit.listString
+      (fn (x: int, y: int) => "(" ^ Int.toString x ^ ", " ^ Int.toString y ^ ")")
+    )
+    "zip ([1, 2], [3]) should raise Mismatch"
+    (fn () => zip ([1, 2], [3]))
+
+val () =
+    Unit.checkExnWith (
+      Unit.listString
+      (fn (x: int, y: int) => "(" ^ Int.toString x ^ ", " ^ Int.toString y ^ ")")
+    )
+    "zip ([1], [2, 3]) should raise Mismatch"
+    (fn () => zip ([1], [2, 3]))
 (*************************************************************************************************)
 
 
@@ -239,12 +269,14 @@ fun isDigit (c : char) : bool =
   | _    => false;
 
 val () =
-    Unit.checkExpectWith Bool.toString "isDigit 'a' should be false"
+    Unit.checkExpectWith Bool.toString
+    "isDigit 'a' should be false"
     (fn () => isDigit #"a")
     false
 
 val () =
-    Unit.checkExpectWith Bool.toString "isDigit '0' should be true"
+    Unit.checkExpectWith Bool.toString
+    "isDigit '0' should be true"
     (fn () => isDigit #"0")
     true
 (*************************************************************************************************)
@@ -266,22 +298,26 @@ fun isAlpha (c : char) : bool =
   let
     val ordC = Char.ord c
   in
-    (ordC >= Char.ord #"A" andalso ordC <= Char.ord #"Z") orelse
+    (ordC >= Char.ord #"A" andalso ordC <= Char.ord #"Z")
+    orelse
     (ordC >= Char.ord #"a" andalso ordC <= Char.ord #"z")
   end;
 
 val () =
-    Unit.checkExpectWith Bool.toString "isAlpha 'B' should be true"
+    Unit.checkExpectWith Bool.toString
+    "isAlpha 'B' should be true"
     (fn () => isAlpha #"B")
     true
 
 val () =
-    Unit.checkExpectWith Bool.toString "isAlpha 'b' should be true"
+    Unit.checkExpectWith Bool.toString
+    "isAlpha 'b' should be true"
     (fn () => isAlpha #"b")
     true
 
 val () =
-    Unit.checkExpectWith Bool.toString "isAlpha '9' should be false"
+    Unit.checkExpectWith Bool.toString
+    "isAlpha '9' should be false"
     (fn () => isAlpha #"9")
     false
 (*************************************************************************************************)
@@ -304,13 +340,15 @@ fun svgCircle (cx : int, cy : int, r : int, fill : string) : string =
 
 val () =
   Unit.checkExpectWith (fn x => x)
-  "svgCircle (200, 300, 100, \"red\") should return <circle cx=\"200\" cy=\"300\" r=\"100\" fill=\"red\" />"
+  "svgCircle (200, 300, 100, \"red\") should return \
+      \<circle cx=\"200\" cy=\"300\" r=\"100\" fill=\"red\" />"
   (fn () => svgCircle (200, 300, 100, "red"))
   "<circle cx=\"200\" cy=\"300\" r=\"100\" fill=\"red\" />";
 
 val () =
   Unit.checkExpectWith (fn x => x)
-  "svgCircle (120, 150, 60, \"white\") should return <circle cx=\"120\" cy=\"150\" r=\"60\" fill=\"white\" />"
+  "svgCircle (120, 150, 60, \"white\") should return \
+      \<circle cx=\"120\" cy=\"150\" r=\"60\" fill=\"white\" />"
   (fn () => svgCircle (120, 150, 60, "white"))
   "<circle cx=\"120\" cy=\"150\" r=\"60\" fill=\"white\" />";
 (*************************************************************************************************)
@@ -340,19 +378,28 @@ fun partition (pred : 'a -> bool) (xs : 'a list) : 'a list * 'a list =
     end;
 
 val () =
-  Unit.checkExpectWith (fn (l1, l2) => "(" ^ Unit.listString Int.toString l1 ^ ", " ^ Unit.listString Int.toString l2 ^ ")")
+  Unit.checkExpectWith (
+    fn (l1, l2) =>
+        "(" ^ Unit.listString Int.toString l1 ^ ", " ^ Unit.listString Int.toString l2 ^ ")"
+  )
   "partition (fn x => x mod 2 = 0) [1, 2, 3, 4, 5] should return ([2, 4], [1, 3, 5])"
   (fn () => partition (fn x => x mod 2 = 0) [1, 2, 3, 4, 5])
   ([2, 4], [1, 3, 5]);
 
 val () =
-  Unit.checkExpectWith (fn (l1, l2) => "(" ^ Unit.listString Int.toString l1 ^ ", " ^ Unit.listString Int.toString l2 ^ ")")
+  Unit.checkExpectWith (
+    fn (l1, l2) =>
+        "(" ^ Unit.listString Int.toString l1 ^ ", " ^ Unit.listString Int.toString l2 ^ ")"
+  )
   "partition (fn x => x mod 2 = 0) [] should return ([], [])"
   (fn () => partition (fn x => x mod 2 = 0) [])
   ([], []);
 
 val () =
-  Unit.checkExpectWith (fn (l1, l2) => "(" ^ Unit.listString Int.toString l1 ^ ", " ^ Unit.listString Int.toString l2 ^ ")")
+  Unit.checkExpectWith (
+    fn (l1, l2) =>
+        "(" ^ Unit.listString Int.toString l1 ^ ", " ^ Unit.listString Int.toString l2 ^ ")"
+  )
   "partition (fn x => x + 2 = 0) [~2,4,5,6,~2,3] should return ([~2,~2], [4,5,6,3])"
   (fn () => partition (fn x => x + 2 = 0) [~2,4,5,6,~2,3])
   ([~2,~2], [4,5,6,3]);
