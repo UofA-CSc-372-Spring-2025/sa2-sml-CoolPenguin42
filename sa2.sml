@@ -1,6 +1,7 @@
-(* Solutions to SA2 assignment, Intro to ML *)
+(* SA2 assignment, Intro to ML *)
 
 (* Name: Trevor Nemetz *)
+
 (* Time spent on HW6:
 probably like 2-3 hours or so
 *)
